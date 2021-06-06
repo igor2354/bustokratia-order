@@ -762,9 +762,31 @@ input::-webkit-inner-spin-button {
     .card-order-product__name {
       font-size: 10px; }
     .card-order-product__quantity {
+      position: relative;
       font-size: 12px; }
+      .card-order-product__quantity::before {
+        content: attr(data-name);
+        font-family: "HelveticaNeueCyr";
+        position: absolute;
+        top: -18px;
+        left: 0;
+        font-weight: 500;
+        font-size: 12px;
+        color: #2d2d2d;
+        line-height: 120%; }
     .card-order-product__price {
+      position: relative;
       font-size: 12px; }
+      .card-order-product__price::before {
+        content: attr(data-name);
+        font-family: "HelveticaNeueCyr";
+        position: absolute;
+        top: -18px;
+        left: 0;
+        font-weight: 500;
+        font-size: 12px;
+        color: #2d2d2d;
+        line-height: 120%; }
     .card-order-product__group {
       text-align: left !important; }
       .card-order-product__group.--two {
