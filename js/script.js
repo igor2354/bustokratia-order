@@ -29,6 +29,10 @@ $(document).ready(function () {
 				$(`.order-box__step[data-step="${currentStep + 1}"]`).addClass("current");
 
 				$(`.item-bar[data-step="${currentStep + 1}"]`).addClass("current");
+
+				if ($(".order-box__group-step").hasClass("move-el")) {
+					$(`.order-box__step[data-step="${currentStep}"]`).before($(`.item-bar[data-step="${currentStep + 1}"]`));
+				}
 			}
 		}
 
@@ -43,6 +47,10 @@ $(document).ready(function () {
 				$(`.order-box__step[data-step="${currentStep - 1}"]`).addClass("current");
 
 				$(`.item-bar[data-step="${currentStep - 1}"]`).addClass("current");
+
+				if ($(".order-box__group-step").hasClass("move-el")) {
+					$(".order-box__bar").prepend($(`.item-bar[data-step="${currentStep}"]`));
+				}
 			}
 		}
 
@@ -56,12 +64,24 @@ $(document).ready(function () {
 			$.each($(".item-bar"), function (index, val) {
 				let elStep = $(val).attr("data-step");
 
-				$(`.order-box__step[data-step="${elStep}"]`).before($(val));
+				let currentStep = $(".order-box__group-step").attr("data-current-step");
+
+				if (elStep <= currentStep) {
+					$(`.order-box__step[data-step="${elStep}"]`).before($(val));
+				}
 			});
+
+			$(".order-box__group-step").addClass("move-el");
 		} else {
-			$.each($(".item-bar"), function (index, val) {
-				$(".order-box__bar").append($(val));
-			});
+			$(".item-bar")
+				.sort((a, b) => {
+					var first = parseInt($(a).attr("data-step"));
+					var second = parseInt($(b).attr("data-step"));
+					return first < second ? -1 : first > second ? 1 : 0;
+				})
+				.appendTo($(".order-box__bar"));
+
+			$(".order-box__group-step").removeClass("move-el");
 		}
 	}
 
